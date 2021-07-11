@@ -1,19 +1,72 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Head from 'next/head'
 import Image from 'next/image'
 
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 import { Carousel } from 'react-bootstrap'
+import DatePicker from 'react-datepicker'
 
 import { clearErrors } from '../../redux/actions/room.actions'
 import RoomFeatures from './RoomFeatures';
 
+import axios from 'axios'
+
+import "react-datepicker/dist/react-datepicker.css";
+
 const RoomDetails = () => {
+
     const dispatch = useDispatch()
+    const router = useRouter()
+
+    const [checkInDate, setCheckInDate] = useState()
+    const [checkOutDate, setCheckOutDate] = useState()
+    const [daysOfStay, setDaysOfStay] = useState()
 
     const { room, error } = useSelector(state => state.roomDetails)
+
+    const onChange = (dates) => {
+        const [checkInDate, checkOutDate] = dates
+        setCheckInDate(checkInDate)
+        setCheckOutDate(checkOutDate)
+
+        if (checkInDate && checkOutDate) {
+            // Calculate
+            const days = Math.floor(((new Date(checkOutDate) - new Date(checkInDate)) / 86400000) + 1)
+
+            setDaysOfStay(days)
+        }
+    }
+
+    const newBookingHandler = async () => {
+        const bookingData = {
+            room: router.query.id,
+            checkInDate,
+            checkOutDate,
+            daysOfStay,
+            amountPaid: 90,
+            paymentInfo: {
+                id: 'STRIPE_PAYMENT_ID',
+                status: 'STRIPE_PAYMENT_STATUS'
+            }
+        }
+
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            const { data } = await axios.post('/api/bookings', bookingData, config)
+
+            console.log(data)
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
 
     useEffect(() => {
         if (error) {
@@ -66,7 +119,23 @@ const RoomDetails = () => {
                         <div className="booking-card shadow-lg p-4">
                             <p className='price-per-night'><b>${room.pricePerNight}</b> / night</p>
 
-                            <button className="btn btn-block py-3 booking-btn">Pay</button>
+                            <hr />
+
+                            <p className="mt-5 mb-3">
+                                Pick Check In & Check Out
+                            </p>
+
+                            <DatePicker
+                                className='w-100'
+                                selected={checkInDate}
+                                onChange={onChange}
+                                startDate={checkInDate}
+                                endDate={checkOutDate}
+                                selectsRange
+                                inline
+                            />
+
+                            <button className="btn btn-block py-3 booking-btn" onClick={newBookingHandler}>Pay</button>
 
                         </div>
                     </div>

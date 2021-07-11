@@ -67,10 +67,6 @@ const updateRoom = catchAsyncErrors(async (req, res) => {
     let rooms = await Room.findById(req.query.id)
 
     if (!rooms) {
-        // res.status(400).json({
-        //     success: false,
-        //     error: 'room not found with this id'
-        // })
         return next(new ErrorHandler('room not found with this id', 404))
     }
 
@@ -93,10 +89,6 @@ const deleteRoom = catchAsyncErrors(async (req, res) => {
     let rooms = await Room.findById(req.query.id)
 
     if (!rooms) {
-        // res.status(400).json({
-        //     success: false,
-        //     error: 'room not found with this id'
-        // })
         return next(new ErrorHandler('room not found with this id', 404))
     }
 
