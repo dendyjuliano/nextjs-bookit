@@ -20,7 +20,7 @@ const BookingDetails = () => {
             toast.error(error);
             dispatch(clearErrors())
         }
-    }, [dispatch])
+    }, [dispatch, error])
 
     const isPaid = booking.paymentInfo && booking.paymentInfo.status === 'paid' ? true : false
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import { MDBDataTable } from 'mdbreact'
 import ButtonLoader from '../layout/ButtonLoader'
@@ -45,7 +46,7 @@ const NewRoom = () => {
             dispatch({ type: NEW_ROOM_RESET })
         }
 
-    }, [dispatch, error, success])
+    }, [dispatch, error, success, router])
 
     const onChange = (e) => {
 
@@ -99,7 +100,7 @@ const NewRoom = () => {
         <div className="container container-fluid">
             <div className="row wrapper">
                 <div className="col-10 col-lg-8">
-                    <form className="shadow-lg" enctype="multipart/form-data" onSubmit={submitHandler}>
+                    <form className="shadow-lg" encType="multipart/form-data" onSubmit={submitHandler}>
                         <h1 className="mb-4">New Room</h1>
                         <div className="form-group">
                             <label htmlFor="name_field">Name</label>
@@ -262,7 +263,7 @@ const NewRoom = () => {
                             </div>
                             {imagesPreview.map(img => (
 
-                                <img
+                                <Image
                                     src={img}
                                     key={img}
                                     alt="Images Preview"

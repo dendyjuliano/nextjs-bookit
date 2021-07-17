@@ -43,7 +43,7 @@ const AllBookings = () => {
         }
 
 
-    }, [dispatch])
+    }, [dispatch, error, isDeleted, deleteError, router])
 
 
     const setBookings = () => {

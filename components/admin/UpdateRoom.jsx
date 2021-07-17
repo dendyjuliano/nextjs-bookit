@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import ButtonLoader from '../layout/ButtonLoader'
 import Loader from '../layout/Loader'
@@ -73,7 +74,7 @@ const UpdateRoom = () => {
             dispatch({ type: UPDATE_ROOM_RESET })
         }
 
-    }, [dispatch, error, roomDetailsError, isUpdated, rooms, id])
+    }, [dispatch, error, roomDetailsError, isUpdated, rooms, id, router])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -132,7 +133,7 @@ const UpdateRoom = () => {
                 <div className="container container-fluid">
                     <div className="row wrapper">
                         <div className="col-10 col-lg-8">
-                            <form className="shadow-lg" onSubmit={submitHandler} enctype="multipart/form-data">
+                            <form className="shadow-lg" onSubmit={submitHandler} encType="multipart/form-data">
                                 <h1 className="mb-4">Update Room</h1>
                                 <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
@@ -309,7 +310,7 @@ const UpdateRoom = () => {
 
                                     {imagesPreview.map(img => (
 
-                                        <img
+                                        <Image
                                             src={img}
                                             key={img}
                                             alt="Images Preview"
@@ -322,13 +323,13 @@ const UpdateRoom = () => {
 
                                     {oldImages && oldImages.map(img => (
 
-                                        <img
+                                        <Image
                                             src={img.url}
                                             key={img.public_id}
                                             alt="Images Preview"
                                             className="mt-3 mr-2"
-                                            width="55"
-                                            height="52"
+                                            width={55}
+                                            height={52}
                                         />
 
                                     ))}

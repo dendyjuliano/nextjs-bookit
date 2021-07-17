@@ -18,7 +18,7 @@ module.exports = {
     SMTP_FROM_NAME: 'BookIT',
     SMTP_FROM_EMAIL: 'example@bookit.com',
 
-    NEXTAUTH_URL='https://bookit.vercel.app'
+    NEXTAUTH_URL: 'https://bookit.vercel.app'
   },
   images: {
     domains: ['res.cloudinary.com'],

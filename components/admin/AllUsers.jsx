@@ -29,7 +29,7 @@ const AllUsers = () => {
         }
 
         if (deleteError) {
-            toast.erroe(deleteError);
+            toast.error(deleteError);
             dispatch(clearErrors())
         }
 
@@ -38,7 +38,7 @@ const AllUsers = () => {
             dispatch({ type: DELETE_USER_RESET })
         }
 
-    }, [dispatch, error, isDeleted])
+    }, [dispatch, error, isDeleted, deleteError, router])
 
 
     const setUsers = () => {

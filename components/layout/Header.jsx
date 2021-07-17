@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { loadUser } from '../../redux/actions/user.actions'
@@ -25,8 +26,8 @@ const Header = () => {
             <div className="container">
                 <div className="col-3 p-0">
                     <div className="navbar-brand">
-                        <Link href='/'>
-                            <img style={{ cursor: 'pointer' }} src="/images/bookit_logo.png" alt="BookIT" />
+                        <Link href='/' passHref>
+                            <Image style={{ cursor: 'pointer' }} src="/images/bookit_logo.png" alt="BookIT" layout='fill' />
                         </Link>
                     </div>
                 </div>
@@ -43,10 +44,11 @@ const Header = () => {
                                 aria-expanded='false'
                             >
                                 <figure className="avatar avatar-nav">
-                                    <img
+                                    <Image
                                         src={user.user.avatar && user.user.avatar.url}
                                         alt={user && user.user.name}
                                         className='rounded-circle'
+                                        layout='fill'
                                     />
                                 </figure>
                                 <span>{user && user.user.name}</span>

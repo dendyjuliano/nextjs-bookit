@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
+import Image from 'next/image'
 
 import ButtonLoader from '../layout/ButtonLoader'
 
@@ -33,7 +34,7 @@ const Register = () => {
             toast.error(error)
             dispatch(clearErrors())
         }
-    }, [dispatch, success, error])
+    }, [dispatch, success, error, router])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -108,10 +109,11 @@ const Register = () => {
                             <div className='d-flex align-items-center'>
                                 <div>
                                     <figure className='avatar mr-3 item-rtl'>
-                                        <img
+                                        <Image
                                             src={avatarPreview}
                                             className='rounded-circle'
                                             alt='image'
+                                            layout='fill'
                                         />
                                     </figure>
                                 </div>

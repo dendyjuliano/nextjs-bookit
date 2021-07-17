@@ -5,7 +5,7 @@ const dbConnect = () => {
         return
     }
 
-    mongose.connect(process.env.DB_LOCAL_URI, {
+    mongose.connect(process.env.DB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,

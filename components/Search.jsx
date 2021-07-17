@@ -24,7 +24,7 @@ const Search = () => {
                     <form className="shadow-lg" onSubmit={submitHandler}>
                         <h2 className="mb-3">Search Rooms</h2>
                         <div className="form-group">
-                            <label for="location_field">Location</label>
+                            <label htmlFor="location_field">Location</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -36,7 +36,7 @@ const Search = () => {
                         </div>
 
                         <div className="form-group">
-                            <label for="guest_field">No. of Guests</label>
+                            <label htmlFor="guest_field">No. of Guests</label>
                             <select className="form-control" id="guest_field" value={guests} onChange={(e) => setGuests(e.target.value)}>
                                 {[1, 2, 3, 4, 5, 6].map(num => (
                                     <option key={num} value={num}>{num}</option>
@@ -45,7 +45,7 @@ const Search = () => {
                         </div>
 
                         <div className="form-group">
-                            <label for="room_type_field">Room Type</label>
+                            <label htmlFor="room_type_field">Room Type</label>
                             <select className="form-control" id="room_type_field" value={category} onChange={(e) => setCategory(e.target.value)}>
                                 {['King', 'Single', 'Twins'].map(category => (
                                     <option key={category} value={category}>{category}</option>

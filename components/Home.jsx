@@ -24,7 +24,7 @@ const Home = () => {
             toast.error(error)
             dispatch(clearErrors())
         }
-    }, [])
+    }, [dispatch, error])
 
     const handlePagination = (pageNumber) => {
         window.location.href = `/?page=${pageNumber}`
@@ -37,19 +37,19 @@ const Home = () => {
 
     return (
         <>
-            <section id="rooms" class="container mt-5">
+            <section id="rooms" className="container mt-5">
 
-                <h2 class='mb-3 ml-2 stays-heading'>
+                <h2 className='mb-3 ml-2 stays-heading'>
                     {location ? `Rooms in ${location}` : 'All Rooms'}
                 </h2>
 
                 <Link href='/search'>
-                    <a class='ml-2 back-to-search'> <i class='fa fa-arrow-left'></i> Back to Search</a>
+                    <a className='ml-2 back-to-search'> <i className='fa fa-arrow-left'></i> Back to Search</a>
                 </Link>
 
-                <div class="row">
+                <div className="row">
                     {rooms && rooms.length === 0 ?
-                        <div className="alert alert-danger mt-5 w-100">
+                        <div classNameName="alert alert-danger mt-5 w-100">
                             <b>No Room exist</b>
                         </div>
                         :
@@ -60,7 +60,7 @@ const Home = () => {
                 </div>
             </section>
             {resPerPage < count &&
-                <div className="d-flex justify-content-center mt-5">
+                <div classNameName="d-flex justify-content-center mt-5">
                     <Pagination
                         activePage={page}
                         itemsCountPerPage={resPerPage}
@@ -70,8 +70,8 @@ const Home = () => {
                         prevPageText={'Prev'}
                         firstPageText={'First'}
                         lastPageText={'Last'}
-                        itemClass='page-item'
-                        linkClass='page-link'
+                        itemClassName='page-item'
+                        linkClassName='page-link'
                     />
                 </div>
             }
