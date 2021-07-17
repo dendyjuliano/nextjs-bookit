@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Pagination from 'react-js-pagination';
-
 import RoomItem from './room/RoomItem';
 import { clearErrors } from '../redux/actions/room.actions'
 
@@ -49,7 +48,7 @@ const Home = () => {
 
                 <div className="row">
                     {rooms && rooms.length === 0 ?
-                        <div classNameName="alert alert-danger mt-5 w-100">
+                        <div className="alert alert-danger mt-5 w-100">
                             <b>No Room exist</b>
                         </div>
                         :
@@ -60,7 +59,7 @@ const Home = () => {
                 </div>
             </section>
             {resPerPage < count &&
-                <div classNameName="d-flex justify-content-center mt-5">
+                <div className="d-flex justify-content-center mt-5">
                     <Pagination
                         activePage={page}
                         itemsCountPerPage={resPerPage}
@@ -70,8 +69,8 @@ const Home = () => {
                         prevPageText={'Prev'}
                         firstPageText={'First'}
                         lastPageText={'Last'}
-                        itemClassName='page-item'
-                        linkClassName='page-link'
+                        itemClass='page-item'
+                        linkClass='page-link'
                     />
                 </div>
             }

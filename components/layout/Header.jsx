@@ -27,7 +27,7 @@ const Header = () => {
                 <div className="col-3 p-0">
                     <div className="navbar-brand">
                         <Link href='/' passHref>
-                            <Image style={{ cursor: 'pointer' }} src="/images/bookit_logo.png" alt="BookIT" layout='fill' />
+                            <Image style={{ cursor: 'pointer' }} src="/images/bookit_logo.png" alt="BookIT" width={150} height={30} />
                         </Link>
                     </div>
                 </div>
@@ -48,7 +48,8 @@ const Header = () => {
                                         src={user.user.avatar && user.user.avatar.url}
                                         alt={user && user.user.name}
                                         className='rounded-circle'
-                                        layout='fill'
+                                        width={60}
+                                        height={60}
                                     />
                                 </figure>
                                 <span>{user && user.user.name}</span>
