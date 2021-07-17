@@ -315,8 +315,8 @@ const UpdateRoom = () => {
                                             key={img}
                                             alt="Images Preview"
                                             className="mt-3 mr-2"
-                                            width="55"
-                                            height="52"
+                                            width={55}
+                                            height={52}
                                         />
 
                                     ))}

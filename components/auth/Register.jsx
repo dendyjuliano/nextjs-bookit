@@ -113,7 +113,8 @@ const Register = () => {
                                             src={avatarPreview}
                                             className='rounded-circle'
                                             alt='image'
-                                            layout='fill'
+                                            width={60}
+                                            height={60}
                                         />
                                     </figure>
                                 </div>
