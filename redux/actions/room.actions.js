@@ -22,6 +22,23 @@ import {
     NEW_ROOM_REQUEST,
     NEW_ROOM_SUCCESS,
 
+    UPDATE_ROOM_FAIL,
+    UPDATE_ROOM_REQUEST,
+    UPDATE_ROOM_SUCCESS,
+
+    DELETE_ROOM_REQUEST,
+    DELETE_ROOM_SUCCESS,
+    DELETE_ROOM_FAIL,
+
+    GET_REVIEWS_REQUEST,
+    GET_REVIEWS_SUCCESS,
+    GET_REVIEWS_FAIL,
+
+    DELETE_REVIEW_REQUEST,
+    DELETE_REVIEW_SUCCESS,
+    DELETE_REVIEW_RESET,
+    DELETE_REVIEW_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/roomConstans'
 
@@ -53,12 +70,24 @@ export const getRooms = (req, currentPage = 1, location = '', guests, category) 
 // Get all Rooms
 export const getRoomDetail = (req, id) => async (dispatch) => {
     try {
-        const { origin } = absoluteUrl(req)
-        const { data } = await axios.get(`${origin}/api/rooms/${id}`)
+
+        const { origin } = absoluteUrl(req);
+
+        let url;
+
+        if (req) {
+            url = `${origin}/api/rooms/${id}`
+        } else {
+            url = `/api/rooms/${id}`
+        }
+
+        const { data } = await axios.get(url)
+
         dispatch({
             type: ROOMS_DETAILS_SUCCESS,
             payload: data.rooms
         })
+
     } catch (error) {
         dispatch({
             type: ROOMS_DETAILS_FAIL,
@@ -66,7 +95,6 @@ export const getRoomDetail = (req, id) => async (dispatch) => {
         })
     }
 }
-
 // Get all Rooms Admin
 export const getAdminRoom = () => async (dispatch) => {
     try {
@@ -141,6 +169,53 @@ export const newRoom = (roomData) => async (dispatch) => {
     }
 }
 
+export const updateRoom = (id, roomData) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: UPDATE_ROOM_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(`/api/rooms/${id}`, roomData, config)
+
+        dispatch({
+            type: UPDATE_ROOM_SUCCESS,
+            payload: data.success
+        })
+    } catch (error) {
+        dispatch({
+            type: UPDATE_ROOM_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const deleteRoom = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DELETE_ROOM_REQUEST })
+
+        const { data } = await axios.delete(`/api/rooms/${id}`)
+
+        dispatch({
+            type: DELETE_ROOM_SUCCESS,
+            payload: data.success
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_ROOM_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 
 export const checkReviewAvailability = (roomId) => async (dispatch) => {
     try {
@@ -162,6 +237,48 @@ export const checkReviewAvailability = (roomId) => async (dispatch) => {
         })
     }
 }
+
+export const getRoomReviews = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: GET_REVIEWS_REQUEST })
+
+        const { data } = await axios.get(`/api/reviews/?id=${id}`)
+
+        dispatch({
+            type: GET_REVIEWS_SUCCESS,
+            payload: data.reviews
+        })
+
+    } catch (error) {
+        dispatch({
+            type: GET_REVIEWS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+
+export const deleteReview = (id, roomId) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DELETE_REVIEW_REQUEST })
+
+        const { data } = await axios.delete(`/api/reviews/?id=${id}&roomId=${roomId}`)
+
+        dispatch({
+            type: DELETE_REVIEW_SUCCESS,
+            payload: data.success
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_REVIEW_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 
 // Clear Error
 export const clearErrors = () => async (dispatch) => {

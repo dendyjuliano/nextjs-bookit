@@ -8,20 +8,20 @@ import Loader from '../layout/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 
-import { getAdminRoom, deleteRoom } from '../../redux/actions/room.actions'
-import { DELETE_ROOM_RESET } from '../../redux/constants/roomConstans'
+import { getAdminUsers, deleteUser, clearErrors } from '../../redux/actions/user.actions'
+import { DELETE_USER_RESET } from '../../redux/constants/userConstans'
 
-const AllRooms = () => {
+const AllUsers = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, rooms } = useSelector(state => state.allRooms)
-    const { error: deleteError, isDeleted } = useSelector(state => state.updateRoom)
+    const { loading, error, users } = useSelector(state => state.allUsers)
+    const { error: deleteError, isDeleted } = useSelector(state => state.user)
 
     useEffect(() => {
 
-        dispatch(getAdminRoom())
+        dispatch(getAdminUsers())
 
         if (error) {
             toast.error(error);
@@ -29,23 +29,23 @@ const AllRooms = () => {
         }
 
         if (deleteError) {
-            toast.error(deleteError);
+            toast.erroe(deleteError);
             dispatch(clearErrors())
         }
 
         if (isDeleted) {
-            router.push('/admin/rooms')
-            dispatch({ type: DELETE_ROOM_RESET })
+            router.push('/admin/users')
+            dispatch({ type: DELETE_USER_RESET })
         }
 
-    }, [dispatch, deleteError, isDeleted])
+    }, [dispatch, error, isDeleted])
 
 
-    const setRooms = () => {
+    const setUsers = () => {
         const data = {
             columns: [
                 {
-                    label: 'Room ID',
+                    label: 'User ID',
                     field: 'id',
                     sort: 'asc'
                 },
@@ -55,13 +55,13 @@ const AllRooms = () => {
                     sort: 'asc'
                 },
                 {
-                    label: 'Price / Night',
-                    field: 'price',
+                    label: 'Email',
+                    field: 'email',
                     sort: 'asc'
                 },
                 {
-                    label: 'Category',
-                    field: 'category',
+                    label: 'Role',
+                    field: 'role',
                     sort: 'asc'
                 },
                 {
@@ -74,21 +74,21 @@ const AllRooms = () => {
             rows: []
         }
 
-        rooms && rooms.forEach(room => {
+        users && users.forEach(user => {
             data.rows.push({
-                id: room._id,
-                name: room.name,
-                price: `$${room.pricePerNight}`,
-                category: room.category,
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
                 actions:
                     <>
-                        <Link href={`/admin/rooms/${room._id}`}>
+                        <Link href={`/admin/users/${user._id}`}>
                             <a className="btn btn-primary">
                                 <i className="fa fa-pencil"></i>
                             </a>
                         </Link>
 
-                        <button className="btn btn-danger mx-2" onClick={() => deleteRoomHandler(room._id)}>
+                        <button className="btn btn-danger mx-2" onClick={() => deleteUserHandler(user._id)}>
                             <i className="fa fa-trash"></i>
                         </button>
 
@@ -100,25 +100,20 @@ const AllRooms = () => {
 
     }
 
-    const deleteRoomHandler = (id) => {
-        dispatch(deleteRoom(id))
+    const deleteUserHandler = (id) => {
+        dispatch(deleteUser(id))
     }
+
 
     return (
         <div className='container container-fluid'>
             {loading ? <Loader /> :
                 <>
-                    <h1 className='my-5'>{`${rooms && rooms.length} Rooms`}
-
-                        <Link href='/admin/rooms/new'>
-                            <a className="mt-0 btn text-white float-right new-room-btn">Create Room</a>
-                        </Link>
-
-                    </h1>
+                    <h1 className='my-5'>{`${users && users.length} Users`}</h1>
 
 
                     <MDBDataTable
-                        data={setRooms()}
+                        data={setUsers()}
                         className='px-3'
                         bordered
                         striped
@@ -131,4 +126,4 @@ const AllRooms = () => {
     )
 }
 
-export default AllRooms
+export default AllUsers

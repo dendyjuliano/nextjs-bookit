@@ -21,9 +21,28 @@ import {
     NEW_ROOM_RESET,
     NEW_ROOM_SUCCESS,
 
+    UPDATE_ROOM_FAIL,
+    UPDATE_ROOM_REQUEST,
+    UPDATE_ROOM_RESET,
+    UPDATE_ROOM_SUCCESS,
+
+    DELETE_ROOM_REQUEST,
+    DELETE_ROOM_SUCCESS,
+    DELETE_ROOM_RESET,
+    DELETE_ROOM_FAIL,
+
     ADMIN_ROOMS_FAIL,
     ADMIN_ROOMS_REQUEST,
     ADMIN_ROOMS_SUCCESS,
+
+    GET_REVIEWS_REQUEST,
+    GET_REVIEWS_SUCCESS,
+    GET_REVIEWS_FAIL,
+
+    DELETE_REVIEW_REQUEST,
+    DELETE_REVIEW_SUCCESS,
+    DELETE_REVIEW_RESET,
+    DELETE_REVIEW_FAIL,
 } from '../constants/roomConstans'
 
 // all rooms reducers
@@ -70,7 +89,7 @@ export const roomDetailsReducer = (state = { rooms: {} }, action) => {
     switch (action.type) {
         case ROOMS_DETAILS_SUCCESS:
             return {
-                room: action.payload
+                rooms: action.payload
             }
 
         case ROOMS_DETAILS_FAIL:
@@ -181,6 +200,121 @@ export const checkReviewReducer = (state = { reviewAvailable: null }, action) =>
 
         case CLEAR_ERRORS:
             return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const updateRoomReducer = (state = {}, action) => {
+    switch (action.type) {
+        case UPDATE_ROOM_REQUEST:
+        case DELETE_ROOM_REQUEST:
+            return {
+                loading: true,
+            }
+
+        case UPDATE_ROOM_SUCCESS:
+            return {
+                loading: false,
+                isUpdated: action.payload
+            }
+
+        case DELETE_ROOM_SUCCESS:
+            return {
+                loading: false,
+                isDeleted: action.payload
+            }
+
+        case UPDATE_ROOM_RESET:
+            return {
+                success: false
+            }
+
+        case DELETE_ROOM_RESET:
+            return {
+                loading: false,
+                isDeleted: false
+            }
+
+        case UPDATE_ROOM_FAIL:
+        case DELETE_ROOM_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const roomReviewsReducer = (state = { reviews: [] }, action) => {
+    switch (action.type) {
+        case GET_REVIEWS_REQUEST:
+            return {
+                loading: true
+            }
+
+        case GET_REVIEWS_SUCCESS:
+            return {
+                loading: false,
+                reviews: action.payload
+            }
+
+        case GET_REVIEWS_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+
+export const reviewReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DELETE_REVIEW_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DELETE_REVIEW_SUCCESS:
+            return {
+                loading: false,
+                isDeleted: action.payload
+            }
+
+        case DELETE_REVIEW_RESET:
+            return {
+                loading: false,
+                isDeleted: false
+            }
+
+        case DELETE_REVIEW_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
                 error: null
             }
 
